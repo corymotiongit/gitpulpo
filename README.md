@@ -9,6 +9,15 @@
 
 **Multitasking your repos.** Local Git repository visualizer with a GitKraken-style commit graph, staging area, and GitHub integration — a small Express app rendered in your browser. No Electron, no build step, one dependency.
 
+## Screenshots
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
+  <img src="docs/screenshot-light.png" alt="GitPulpo showing a braided commit graph with branches, tags, WIP row, and the commit detail panel">
+</picture>
+
+*Commit graph with colored lanes, ref chips, tags, the uncommitted-changes row, and the detail panel. The screenshot follows your GitHub theme; both light and dark ship built in.*
+
 ## Features
 
 - **Commit graph** — topological, color-coded lanes for all branches, merge curves, ref/tag/HEAD chips, and a dotted WIP row when you have uncommitted changes.
