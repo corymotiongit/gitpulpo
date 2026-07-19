@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitPulpo — visualizador git</title>
+<link rel="icon" type="image/png" href="logo/icon-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="abyss"></div>
+
+<header id="topbar">
+  <div class="logo">
+    <img class="logo-mark" src="logo/icon-64.png" alt="GitPulpo">
+    <span class="logo-text">GIT<em>PULPO</em></span>
+  </div>
+  <div class="repo-open">
+    <input id="repo-input" type="text" placeholder="C:\ruta\a\tu\repo" spellcheck="false">
+    <button id="btn-open" class="btn accent">Abrir</button>
+    <select id="recent-select" title="Repos recientes">
+      <option value="">recientes…</option>
+    </select>
+  </div>
+  <div class="repo-id" id="repo-id" hidden>
+    <span class="repo-name" id="repo-name"></span>
+    <span class="repo-head" id="repo-head"></span>
+    <span class="ahead-behind" id="ahead-behind"></span>
+  </div>
+  <div class="top-actions">
+    <button id="btn-fetch" class="btn" disabled title="git fetch --all --prune">⇣ Fetch</button>
+    <button id="btn-pull" class="btn" disabled title="git pull --ff-only">⤓ Pull</button>
+    <button id="btn-push" class="btn" disabled title="git push">⤒ Push</button>
+    <button id="btn-refresh" class="btn" disabled title="Recargar todo">⟳</button>
+    <button id="btn-token" class="btn ghost" title="Token de GitHub">🔑</button>
+  </div>
+</header>
+
+<main id="layout" class="empty-state">
+
+  <aside id="sidebar" hidden>
+    <div class="side-section">
+      <h3>Ramas locales <button id="btn-new-branch" class="mini-btn" title="Nueva rama">+</button></h3>
+      <ul id="local-branches"></ul>
+    </div>
+    <div class="side-section">
+      <h3>Remotas</h3>
+      <ul id="remote-branches"></ul>
+    </div>
+    <div class="side-section">
+      <h3>Tags</h3>
+      <ul id="tag-list"></ul>
+    </div>
+  </aside>
+
+  <section id="graph-pane" hidden>
+    <div id="commit-list"></div>
+  </section>
+
+  <aside id="detail-pane" hidden>
+    <nav class="tabs">
+      <button class="tab active" data-tab="commit">Commit</button>
+      <button class="tab" data-tab="wip">Cambios <span id="wip-count" class="pill" hidden></span></button>
+      <button class="tab" data-tab="github">GitHub</button>
+    </nav>
+    <div id="tab-commit" class="tab-body">
+      <div class="placeholder">Selecciona un commit del grafo</div>
+    </div>
+    <div id="tab-wip" class="tab-body" hidden></div>
+    <div id="tab-github" class="tab-body" hidden></div>
+  </aside>
+
+  <div id="welcome">
+    <div class="welcome-card">
+      <div class="welcome-emoji">🐙</div>
+      <h1>GIT<em>PULPO</em></h1>
+      <p>Abre un repo local para ver su grafo de commits,<br>ramas, diffs, staging y datos de GitHub.</p>
+      <p class="hint">Escribe la ruta arriba o elige uno reciente.</p>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast" hidden></div>
+
+<dialog id="dlg-branch">
+  <form method="dialog">
+    <h2>Nueva rama</h2>
+    <label>Nombre <input id="branch-name" type="text" spellcheck="false" required pattern="[\w\-./]+"></label>
+    <label>Desde <input id="branch-from" type="text" spellcheck="false" placeholder="(HEAD actual)"></label>
+    <menu>
+      <button value="cancel" class="btn">Cancelar</button>
+      <button id="branch-create" value="ok" class="btn accent">Crear y checkout</button>
+    </menu>
+  </form>
+</dialog>
+
+<dialog id="dlg-token">
+  <form method="dialog">
+    <h2>Token de GitHub</h2>
+    <p class="dlg-note">Opcional. Sin token la API pública permite 60 peticiones/hora.<br>Se guarda en <code>~/.gitpulpo.json</code>.</p>
+    <label>Token <input id="token-input" type="password" spellcheck="false" placeholder="ghp_…"></label>
+    <menu>
+      <button value="cancel" class="btn">Cancelar</button>
+      <button id="token-save" value="ok" class="btn accent">Guardar</button>
+    </menu>
+  </form>
+</dialog>
+
+<script src="graph.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
