@@ -3,9 +3,23 @@
   "version": "0.1.0",
   "description": "Visualizador local de repos Git + GitHub, estilo GitKraken",
   "main": "server.js",
+  "bin": {
+    "gitpulpo": "bin/gitpulpo.js"
+  },
   "scripts": {
     "start": "node server.js"
   },
+  "files": [
+    "bin/",
+    "lib/",
+    "public/",
+    "!public/logo/icon.png",
+    "!public/logo/gitpulpo.png",
+    "!public/logo/gitpulpo-dark.png",
+    "server.js",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": ["git", "gui", "visualizer", "commit-graph", "github", "gitkraken"],
   "author": "corymotiongit",
   "license": "MIT",
@@ -13,6 +27,10 @@
     "type": "git",
     "url": "git+https://github.com/corymotiongit/gitpulpo.git"
   },
+  "bugs": {
+    "url": "https://github.com/corymotiongit/gitpulpo/issues"
+  },
+  "homepage": "https://github.com/corymotiongit/gitpulpo#readme",
   "engines": {
     "node": ">=18"
   },

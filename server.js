@@ -205,6 +205,14 @@ app.post('/api/github/token', h(async (req, res) => {
   res.json({ ok: true, hasToken: !!cfg.token });
 }));
 
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`🐙 GitPulpo escuchando en http://localhost:${PORT}`);
-});
+function start() {
+  return app.listen(PORT, '127.0.0.1', () => {
+    console.log(`🐙 GitPulpo escuchando en http://localhost:${PORT}`);
+  });
+}
+
+// Arranca solo si se ejecuta directo (node server.js / npm start); al ser
+// require()-eado por bin/gitpulpo.js, el launcher decide cuándo escuchar.
+if (require.main === module) start();
+
+module.exports = { app, start };

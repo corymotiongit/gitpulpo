@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="public/logo/gitpulpo-dark.png">
-    <img src="public/logo/gitpulpo.png" alt="GitPulpo — multitasking your repos" width="420">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/corymotiongit/gitpulpo/main/public/logo/gitpulpo-dark.png">
+    <img src="https://raw.githubusercontent.com/corymotiongit/gitpulpo/main/public/logo/gitpulpo.png" alt="GitPulpo — multitasking your repos" width="420">
   </picture>
 </p>
 
@@ -9,14 +9,13 @@
 
 **Multitasking your repos.** Local Git repository visualizer with a GitKraken-style commit graph, staging area, and GitHub integration — a small Express app rendered in your browser. No Electron, no build step, one dependency.
 
-## Screenshots
+## Demo
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
-  <img src="docs/screenshot-light.png" alt="GitPulpo showing a braided commit graph with branches, tags, WIP row, and the commit detail panel">
-</picture>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/corymotiongit/gitpulpo/main/docs/demo.gif" alt="Tour of GitPulpo: commit graph with colored lanes, commit detail, the staging view with a diff, then the dark theme and the Spanish UI" width="900">
+</p>
 
-*Commit graph with colored lanes, ref chips, tags, the uncommitted-changes row, and the detail panel. The screenshot follows your GitHub theme; both light and dark ship built in.*
+*The commit graph, a commit's detail, the staging view with an inline diff, then the dark theme and the Spanish UI. Light/dark and English/Spanish all ship built in.*
 
 ## Features
 
@@ -37,14 +36,22 @@
 
 ## Getting started
 
+Run it without installing anything:
+
+```bash
+npx gitpulpo
+```
+
+It starts the server and opens http://localhost:3737 in your browser. Paste the path of any local Git repository.
+
+Or clone and run from source:
+
 ```bash
 git clone https://github.com/corymotiongit/gitpulpo.git
 cd gitpulpo
 npm install
 npm start
 ```
-
-Open http://localhost:3737 and paste the path of any local Git repository.
 
 To use a different port: `PORT=4000 npm start` (PowerShell: `$env:PORT=4000; npm start`).
 
@@ -83,7 +90,6 @@ GitPulpo executes real `git` commands on your machine, so it is deliberately con
 - Stash, merge, amend, force branch delete
 - Auto-refresh on filesystem changes
 - Log pagination beyond 500 commits
-- `npx gitpulpo` launcher
 
 ## License
 

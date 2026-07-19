@@ -1,0 +1,6 @@
+# Imágenes de solo-documentación: el runtime únicamente usa icon-64/icon-256.
+# El README las referencia por URL absoluta de GitHub, así que no viajan en el paquete.
+public/logo/icon.png
+public/logo/gitpulpo.png
+public/logo/gitpulpo-dark.png
+docs/
