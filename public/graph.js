@@ -3,9 +3,11 @@
 // Entrada: commits en orden topológico (hijos antes que padres).
 // Salida por commit: carril del nodo, curvas de entrada/salida y carriles que pasan de largo.
 const GitGraph = (() => {
+  // Paleta de carriles de DESIGN.md, tokenizada en style.css (--lane-0..7)
+  // para que el grafo siga al tema claro/oscuro sin re-render.
   const PALETTE = [
-    '#2ee6d6', '#ff5c8a', '#b3f04a', '#ffb454', '#9d7bff',
-    '#3ddc84', '#ff7e67', '#4cc2ff', '#e86bf0', '#ffe14d',
+    'var(--lane-0)', 'var(--lane-1)', 'var(--lane-2)', 'var(--lane-3)',
+    'var(--lane-4)', 'var(--lane-5)', 'var(--lane-6)', 'var(--lane-7)',
   ];
 
   const ROW_H = 30;
@@ -86,38 +88,40 @@ const GitGraph = (() => {
     const parts = [];
     const col = i => PALETTE[i % PALETTE.length];
 
+    // var(--lane-N) no es válido en atributos de presentación SVG: va en style=.
     for (const p of row.passing) {
-      parts.push(`<line x1="${cx(p.lane)}" y1="0" x2="${cx(p.lane)}" y2="${ROW_H}" stroke="${col(p.color)}" stroke-width="2" opacity="0.85"/>`);
+      parts.push(`<line x1="${cx(p.lane)}" y1="0" x2="${cx(p.lane)}" y2="${ROW_H}" style="stroke:${col(p.color)}" stroke-width="2" opacity="0.85"/>`);
     }
     for (const inp of row.inputs) {
       const x1 = cx(inp.from), x2 = cx(row.lane);
       if (x1 === x2) {
-        parts.push(`<line x1="${x2}" y1="0" x2="${x2}" y2="${cy}" stroke="${col(inp.color)}" stroke-width="2"/>`);
+        parts.push(`<line x1="${x2}" y1="0" x2="${x2}" y2="${cy}" style="stroke:${col(inp.color)}" stroke-width="2"/>`);
       } else {
-        parts.push(`<path d="M ${x1} 0 C ${x1} ${cy}, ${x2} 0, ${x2} ${cy}" fill="none" stroke="${col(inp.color)}" stroke-width="2"/>`);
+        parts.push(`<path d="M ${x1} 0 C ${x1} ${cy}, ${x2} 0, ${x2} ${cy}" fill="none" style="stroke:${col(inp.color)}" stroke-width="2"/>`);
       }
     }
     for (const out of row.outputs) {
       const x1 = cx(row.lane), x2 = cx(out.to);
       if (x1 === x2) {
-        parts.push(`<line x1="${x1}" y1="${cy}" x2="${x1}" y2="${ROW_H}" stroke="${col(out.color)}" stroke-width="2"/>`);
+        parts.push(`<line x1="${x1}" y1="${cy}" x2="${x1}" y2="${ROW_H}" style="stroke:${col(out.color)}" stroke-width="2"/>`);
       } else {
-        parts.push(`<path d="M ${x1} ${cy} C ${x1} ${ROW_H}, ${x2} ${cy}, ${x2} ${ROW_H}" fill="none" stroke="${col(out.color)}" stroke-width="2"/>`);
+        parts.push(`<path d="M ${x1} ${cy} C ${x1} ${ROW_H}, ${x2} ${cy}, ${x2} ${ROW_H}" fill="none" style="stroke:${col(out.color)}" stroke-width="2"/>`);
       }
     }
     const nx = cx(row.lane);
-    parts.push(`<circle cx="${nx}" cy="${cy}" r="${R + 2.5}" fill="${col(row.color)}" opacity="0.25"/>`);
-    parts.push(`<circle cx="${nx}" cy="${cy}" r="${R}" fill="#060d17" stroke="${col(row.color)}" stroke-width="2.2"/>`);
+    parts.push(`<circle cx="${nx}" cy="${cy}" r="${R + 2.5}" style="fill:${col(row.color)}" opacity="0.2"/>`);
+    parts.push(`<circle cx="${nx}" cy="${cy}" r="${R}" style="fill:var(--node-fill);stroke:${col(row.color)}" stroke-width="2.2"/>`);
     return `<svg width="${width}" height="${ROW_H}" style="display:block">${parts.join('')}</svg>`;
   }
 
   function wipSvg(lane, width) {
     const cy = ROW_H / 2;
     const x = cx(lane);
+    // WIP: familia amarilla — trazo ocre (--wip-stroke) + halo --wip-halo, tokens del tema.
     return `<svg width="${width}" height="${ROW_H}" style="display:block">
-      <line x1="${x}" y1="${cy}" x2="${x}" y2="${ROW_H}" stroke="#2ee6d6" stroke-width="2" stroke-dasharray="3 3"/>
-      <circle cx="${x}" cy="${cy}" r="${R + 2.5}" fill="#2ee6d6" opacity="0.2"/>
-      <circle cx="${x}" cy="${cy}" r="${R}" fill="none" stroke="#2ee6d6" stroke-width="2" stroke-dasharray="2.5 2.5"/>
+      <line x1="${x}" y1="${cy}" x2="${x}" y2="${ROW_H}" style="stroke:var(--wip-stroke)" stroke-width="2" stroke-dasharray="3 3"/>
+      <circle cx="${x}" cy="${cy}" r="${R + 2.5}" style="fill:var(--wip-halo)" opacity="0.45"/>
+      <circle cx="${x}" cy="${cy}" r="${R}" style="fill:var(--node-fill);stroke:var(--wip-stroke)" stroke-width="2" stroke-dasharray="2.5 2.5"/>
     </svg>`;
   }
 

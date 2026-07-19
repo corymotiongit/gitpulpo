@@ -1,12 +1,13 @@
 <p align="center">
-  <img src="public/logo/gitpulpo.png" alt="GitPulpo — multitasking your repos" width="420">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/logo/gitpulpo-dark.png">
+    <img src="public/logo/gitpulpo.png" alt="GitPulpo — multitasking your repos" width="420">
+  </picture>
 </p>
 
 # 🐙 GitPulpo
 
 **Multitasking your repos.** Local Git repository visualizer with a GitKraken-style commit graph, staging area, and GitHub integration — a small Express app rendered in your browser. No Electron, no build step, one dependency.
-
-> UI text is currently in Spanish. Contributions for i18n are welcome.
 
 ## Features
 
@@ -17,6 +18,8 @@
 - **Remote actions** — fetch, pull (`--ff-only` only, never surprise merges), push, ahead/behind indicator.
 - **GitHub tab** — if `origin` points to github.com: repo metadata, pull requests, and issues with open/closed/all filters. Optional token (🔑 button) raises the API rate limit from 60 to 5000 req/h.
 - **Recent repos** — remembers the last 10 repositories you opened.
+- **Bilingual UI** — Spanish and English with a one-click runtime switcher; your choice persists.
+- **Light & dark themes** — token-based theming that follows your OS preference, with a manual toggle. Both themes pass WCAG AA contrast.
 
 ## Requirements
 
@@ -44,6 +47,8 @@ lib/git.js       git CLI wrapper (execFile, no shell)
 lib/github.js    GitHub API client + config at ~/.gitpulpo.json
 public/graph.js  lane-assignment algorithm + per-row SVG rendering
 public/app.js    UI logic (vanilla JS, no build step)
+public/i18n.js   ES/EN string dictionary + runtime language switcher
+public/theme.js  light/dark theme bootstrap (pre-CSS, no flash)
 public/*.css/html
 ```
 
@@ -70,7 +75,6 @@ GitPulpo executes real `git` commands on your machine, so it is deliberately con
 - Auto-refresh on filesystem changes
 - Log pagination beyond 500 commits
 - `npx gitpulpo` launcher
-- English UI / i18n
 
 ## License
 
